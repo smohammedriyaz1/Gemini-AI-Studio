@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Gemini AI Studio</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            ✨ Gemini AI Studio
+        </div>
+
+        <div class="nav-links">
+            <a href="#chat">Chat</a>
+            <a href="#image">Image</a>
+        </div>
+
+    </nav>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="badge">
+                🚀 Powered by Gemini
+            </div>
+
+            <h1>
+                Create with
+                <span>Generative AI</span>
+            </h1>
+
+            <p>
+                Ask questions, generate ideas and create AI-powered
+                images using one simple application.
+            </p>
+
+            <div class="hero-buttons">
+
+                <button
+                    onclick="scrollToSection('chat')"
+                    class="primary-btn">
+
+                    💬 Start Chatting
+
+                </button>
+
+                <button
+                    onclick="scrollToSection('image')"
+                    class="secondary-btn">
+
+                    🎨 Generate Image
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- MAIN -->
+
+    <main>
+
+
+        <!-- CHAT SECTION -->
+
+        <section id="chat" class="feature-section">
+
+            <div class="section-heading">
+
+                <span class="section-icon">💬</span>
+
+                <div>
+                    <h2>AI Text Generation</h2>
+
+                    <p>
+                        Ask Gemini anything and get an AI-generated response.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="card chat-card">
+
+                <label for="question">
+                    Your Question
+                </label>
+
+                <textarea
+                    id="question"
+                    placeholder="Example: Explain RAG in simple words..."
+                    rows="5"></textarea>
+
+
+                <div class="action-row">
+
+                    <button
+                        onclick="generateText()"
+                        id="chatButton"
+                        class="primary-btn">
+
+                        ✨ Generate Answer
+
+                    </button>
+
+                    <button
+                        onclick="clearChat()"
+                        class="clear-btn">
+
+                        🗑 Clear
+
+                    </button>
+
+                </div>
+
+
+                <!-- LOADING -->
+
+                <div
+                    id="chatLoading"
+                    class="loading hidden">
+
+                    <div class="spinner"></div>
+
+                    <span>
+                        Gemini is thinking...
+                    </span>
+
+                </div>
+
+
+                <!-- ERROR -->
+
+                <div
+                    id="chatError"
+                    class="error-box hidden">
+                </div>
+
+
+                <!-- ANSWER -->
+
+                <div
+                    id="answerContainer"
+                    class="answer-container hidden">
+
+                    <div class="answer-header">
+
+                        <h3>
+                            🤖 Gemini Response
+                        </h3>
+
+                        <button
+                            onclick="copyAnswer()"
+                            class="copy-btn">
+
+                            📋 Copy
+
+                        </button>
+
+                    </div>
+
+                    <div
+                        id="answer"
+                        class="answer">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- IMAGE SECTION -->
+
+        <section id="image" class="feature-section">
+
+            <div class="section-heading">
+
+                <span class="section-icon">🎨</span>
+
+                <div>
+
+                    <h2>AI Image Generation</h2>
+
+                    <p>
+                        Describe an image and let Gemini create it.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="card image-card">
+
+                <label for="imagePrompt">
+                    Image Prompt
+                </label>
+
+                <textarea
+                    id="imagePrompt"
+                    placeholder="Example: A futuristic city at sunset..."
+                    rows="5"></textarea>
+
+
+                <div class="example-prompts">
+
+                    <button
+                        onclick="setPrompt('A futuristic city with flying cars at sunset')">
+
+                        🌆 Futuristic City
+
+                    </button>
+
+                    <button
+                        onclick="setPrompt('A cute robot drinking coffee in a modern cafe')">
+
+                        🤖 Robot Cafe
+
+                    </button>
+
+                    <button
+                        onclick="setPrompt('A nano banana dish in a fancy restaurant with a Gemini theme')">
+
+                        🍌 Nano Banana
+
+                    </button>
+
+                </div>
+
+
+                <div class="action-row">
+
+                    <button
+                        onclick="generateImage()"
+                        id="imageButton"
+                        class="primary-btn">
+
+                        🎨 Generate Image
+
+                    </button>
+
+                    <button
+                        onclick="clearImage()"
+                        class="clear-btn">
+
+                        🗑 Clear
+
+                    </button>
+
+                </div>
+
+
+                <!-- LOADING -->
+
+                <div
+                    id="imageLoading"
+                    class="loading hidden">
+
+                    <div class="spinner"></div>
+
+                    <span>
+                        Creating your image...
+                    </span>
+
+                </div>
+
+
+                <!-- ERROR -->
+
+                <div
+                    id="imageError"
+                    class="error-box hidden">
+                </div>
+
+
+                <!-- GENERATED IMAGE -->
+
+                <div
+                    id="imageContainer"
+                    class="generated-image-container hidden">
+
+                    <div class="image-header">
+
+                        <h3>
+                            🖼 Generated Image
+                        </h3>
+
+                        <button
+                            onclick="downloadImage()"
+                            class="copy-btn">
+
+                            ⬇ Download
+
+                        </button>
+
+                    </div>
+
+                    <img
+                        id="generatedImage"
+                        src=""
+                        alt="AI Generated Image">
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="footer-logo">
+            ✨ Gemini AI Studio
+        </div>
+
+        <p>
+            Built with Flask + Gemini + JavaScript
+        </p>
+
+        <p class="copyright">
+            © 2026 Gemini AI Studio
+        </p>
+
+    </footer>
+
+
+    <script
+        src="{{ url_for('static', filename='app.js') }}">
+    </script>
+
+</body>
+
+</html>
